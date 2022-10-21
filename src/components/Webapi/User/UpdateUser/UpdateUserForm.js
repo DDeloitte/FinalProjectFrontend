@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 
 const UpdateUserForm = (props) => {
+  const [enteredId, setEnteredId] = useState("");
   const [enteredFName, setEnteredFName] = useState("");
   const [enteredLName, setEnteredLName] = useState("");
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPhone, setEnteredPhone] = useState("");
   const [enteredUser, setEnteredUser] = useState("");
-  const [enteredDate, setEnteredDate] = useState("");
 
   // Definition of states
+  const idChangeHandler = event => {
+    setEnteredId(event.target.value);
+  };
   const fNameChangeHandler = (event) => {
     setEnteredFName(event.target.value);
   };
@@ -24,39 +27,37 @@ const UpdateUserForm = (props) => {
   const userChangeHandler = (event) => {
     setEnteredUser(event.target.value);
   };
-  const dateChangeHandler = (event) => {
-    setEnteredDate(event.target.value);
-  };
   const submitHandler = (event) => {
     event.preventDefault();
 
     // assigns input to the values
     const userData = {
+      userId: enteredId,
       fName: enteredFName,
       lName: enteredLName,
       email: enteredEmail,
       phone: enteredPhone,
-      user: enteredUser,
-      date: new Date(enteredDate),
+      userType: enteredUser,
     };
 
     //Exports the input data
     props.onUpdateUser(userData);
 
     // Sets the default values, deletes previous input
+    setEnteredId("");
     setEnteredFName("");
     setEnteredLName("");
     setEnteredEmail("");
     setEnteredPhone("");
     setEnteredUser("");
-    setEnteredDate("");
+
   };
 
   return (
     <div className="container">
       <div className="row justify-content-center align-items-center">
         {/* Update User */}
-        <div className="col-md-8">
+        <div className="col-md-10">
           <div className="card shadow-lg mt-5">
             <div className="card-header text-bg-dark">Edit User Details</div>
             <div className="card-body">
@@ -65,20 +66,21 @@ const UpdateUserForm = (props) => {
                 className="row g-3 align-items-center justify-content-center"
               >
                 {/* <!-- ID prompt --> */}
-                <div className="col-md-12">
+                <div className="col-md-2">
                   <div className="mb-3">
                     <input
                       type="text"
                       className="form-control form-control-sm"
                       placeholder="User ID"
                       required
-                      
+                      onChange={idChangeHandler}
+                      value={enteredId}
                     ></input>
                   </div>
                 </div>
 
                 {/* <!-- First name prompt --> */}
-                <div className="col-md-6">
+                <div className="col-md-5">
                   <div className="mb-3">
                     <input
                       type="text"
@@ -92,7 +94,7 @@ const UpdateUserForm = (props) => {
                 </div>
 
                 {/* <!-- Last name prompt --> */}
-                <div className="col-md-6">
+                <div className="col-md-5">
                   <div className="mb-3">
                     <input
                       type="text"
@@ -139,26 +141,16 @@ const UpdateUserForm = (props) => {
                     <select
                       className="form-select form-select-sm"
                       aria-label="Job Assigned"
-                      defaultValue={'DEFAULT'}
+                      onChange={userChangeHandler}
+                      value={enteredUser}
                     >
-                      <option value={"DEFAULT"} disabled>Select User Type</option>
+                      <option value={"DEFAULT"} disabled>
+                        Select User Type
+                      </option>
                       <option value="User">User</option>
                       <option value="Administrator">Administrator</option>
                       <option value="SystemAdmin">SystemAdmin</option>
                     </select>
-                  </div>
-                </div>
-
-                {/* <!-- Add Date --> */}
-                <div className="col-md-4">
-                  <div className="mb-3">
-                    <input
-                      type="date"
-                      className="form-control form-control-sm"
-                      required
-                      onChange={dateChangeHandler}
-                      value={enteredDate}
-                    ></input>
                   </div>
                 </div>
 

@@ -5,8 +5,7 @@ const AddUserForm = (props) => {
   const [enteredLName, setEnteredLName] = useState("");
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPhone, setEnteredPhone] = useState("");
-  const [enteredUser, setEnteredUser] = useState("");
-  const [enteredDate, setEnteredDate] = useState("");
+  const [enteredUser, setEnteredUser] = useState("User");
 
   // Definition of states
   const fNameChangeHandler = (event) => {
@@ -24,9 +23,6 @@ const AddUserForm = (props) => {
   const userChangeHandler = (event) => {
     setEnteredUser(event.target.value);
   };
-  const dateChangeHandler = (event) => {
-    setEnteredDate(event.target.value);
-  };
   const submitHandler = (event) => {
     event.preventDefault();
 
@@ -36,10 +32,9 @@ const AddUserForm = (props) => {
       lName: enteredLName,
       email: enteredEmail,
       phone: enteredPhone,
-      user: enteredUser,
-      date: new Date(enteredDate),
+      userType: enteredUser
     };
-
+console.log("Payload: ", userData);
     //Exports the input data
     props.onAddUser(userData);
 
@@ -49,14 +44,13 @@ const AddUserForm = (props) => {
     setEnteredEmail("");
     setEnteredPhone("");
     setEnteredUser("");
-    setEnteredDate("");
   };
 
   return (
     <div className="container">
       <div className="row justify-content-center align-items-center">
         {/* Add New User */}
-        <div className="col-md-8">
+        <div className="col-md-10">
           <div className="card shadow-lg mt-5">
             <div className="card-header text-bg-dark">Add New User</div>
             <div className="card-body">
@@ -126,28 +120,20 @@ const AddUserForm = (props) => {
                     <select
                       className="form-select form-select-sm"
                       aria-label="Job Assigned"
-                      defaultValue={'DEFAULT'}
+                      onChange={userChangeHandler}
+                      value={enteredUser}
                     >
-                      <option value={"DEFAULT"} disabled>Select User Type</option>
+                      <option value={"DEFAULT"} disabled>
+                        Select User Type
+                      </option>
                       <option value="User">User</option>
                       <option value="Administrator">Administrator</option>
                       <option value="SystemAdmin">SystemAdmin</option>
+                      
                     </select>
                   </div>
                 </div>
 
-                {/* <!-- Add Date --> */}
-                <div className="col-md-4">
-                  <div className="mb-3">
-                    <input
-                      type="date"
-                      className="form-control form-control-sm"
-                      onChange={dateChangeHandler}
-                      value={enteredDate}
-                      required
-                    ></input>
-                  </div>
-                </div>
 
                 {/* <!-- Submit data --> */}
                 <div className="col-md-2">
